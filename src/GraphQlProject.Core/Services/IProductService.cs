@@ -10,6 +10,6 @@ namespace GraphQlProject.Core.Services
         Task<Product> GetById(int id);
         Task<Product> Add(Product entity);
         Task<Product> Update(int id, Product entity);
-        void Delete(int id);
+        Task Delete(int id);
     }
 }

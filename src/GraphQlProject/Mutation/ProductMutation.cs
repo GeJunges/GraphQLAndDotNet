@@ -14,34 +14,34 @@ namespace GraphQlProject.Mutation
     {
         public ProductMutation(IProductService productService)
         {
-            Field<ProductType>("createProduct",
+            FieldAsync<ProductType>("createProduct",
                 arguments: new QueryArguments(new QueryArgument<ProductInputType> { Name = "product" }),
-                resolve: context =>
-                {
-                    return productService.Add(context.GetArgument<Product>("product"));
-                });
+                resolve: async context =>
+                 {
+                     return await productService.Add(context.GetArgument<Product>("product"));
+                 });
 
-            Field<ProductType>("updateProduct",
+            FieldAsync<ProductType>("updateProduct",
                 arguments: new QueryArguments(
                     new QueryArgument<IntGraphType> { Name = "id" },
                     new QueryArgument<ProductInputType> { Name = "product" }),
-                resolve: context =>
+                resolve: async context =>
                 {
-                    return productService.Update(
+                    return await productService.Update(
                         context.GetArgument<int>("id"),
                         context.GetArgument<Product>("product"));
                 });
 
 
-            Field<StringGraphType>("deleteProduct",
+            FieldAsync<StringGraphType>("deleteProduct",
                 arguments: new QueryArguments(
                     new QueryArgument<IntGraphType> { Name = "id" }),
-                resolve: context =>
-                {
-                    var id = context.GetArgument<int>("id");
-                    productService.Delete(id);
-                    return $"Product {id} has been deleted";
-                });
+                resolve: async context =>
+                 {
+                     var id = context.GetArgument<int>("id");
+                     await productService.Delete(id);
+                     return $"Product {id} has been deleted";
+                 });
         }
     }
 }

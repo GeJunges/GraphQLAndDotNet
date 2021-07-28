@@ -40,10 +40,10 @@ namespace GraphQlProject.Infrastructure
             return entity;
         }
 
-        public void Delete(Product entity)
+        public async Task Delete(Product entity)
         {
             DbContext.Products.Remove(entity);
-            DbContext.SaveChanges();
+            await DbContext.SaveChangesAsync();
         }
     }
 }

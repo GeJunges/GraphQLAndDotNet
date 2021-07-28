@@ -9,11 +9,13 @@ namespace GraphQlProject.Query
     {
         public ProductQuery(IProductService productService)
         {
-            Field<ListGraphType<ProductType>>("products", resolve: context => { return productService.GetAll(); });
-            Field<ProductType>("product", arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "id" }),
-                resolve: context =>
+            FieldAsync<ListGraphType<ProductType>>("products",
+                resolve: async context => { return await productService.GetAll(); });
+            FieldAsync<ProductType>("product",
+                arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "id" }),
+                resolve: async context =>
                 {
-                    return productService.GetById(context.GetArgument<int>("id"));
+                    return await productService.GetById(context.GetArgument<int>("id"));
                 });
         }
     }

@@ -45,10 +45,10 @@ namespace GraphQlProject.Service
             return await ProductRepository.Update(entity);
         }
 
-        public async void Delete(int id)
+        public async Task Delete(int id)
         {
             var entity = await ProductRepository.GetById(id);
-            ProductRepository.Delete(entity);
+            await ProductRepository.Delete(entity);
         }
     }
 }
