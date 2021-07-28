@@ -9,12 +9,15 @@
   <ItemGroup>
     <PackageReference Include="GraphQL.Server.Transports.AspNetCore.SystemTextJson" Version="5.0.2" />
     <PackageReference Include="GraphQL.Server.Ui.GraphiQL" Version="5.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\GraphQlProject.Core\GraphQlProject.Core.csproj" />
+    <ProjectReference Include="..\GraphQlProject.Infrastructure\GraphQlProject.Infrastructure.csproj" />
     <ProjectReference Include="..\GraphQlProject.Service\GraphQlProject.Service.csproj" />
   </ItemGroup>
 

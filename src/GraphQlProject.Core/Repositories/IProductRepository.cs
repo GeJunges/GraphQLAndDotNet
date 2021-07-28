@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace GraphQlProject.Core.Services
+namespace GraphQlProject.Core.Repositories
 {
-    public interface IProductService
+    public interface IProductRepository
     {
         Task<IEnumerable<Product>> GetAll();
         Task<Product> GetById(int id);
         Task<Product> Add(Product entity);
-        Task<Product> Update(int id, Product entity);
-        void Delete(int id);
+        Task<Product> Update(Product entity);
+        void Delete(Product entity);
     }
 }

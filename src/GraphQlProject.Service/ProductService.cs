@@ -1,47 +1,54 @@
 ﻿using GraphQlProject.Core.Models;
+using GraphQlProject.Core.Repositories;
 using GraphQlProject.Core.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace GraphQlProject.Service
 {
     public class ProductService : IProductService
     {
-        private static List<Product> Products = new List<Product>
-        {
-            new Product{ Id = 1, Name = "Coffie", Price =10},
-            new Product{ Id = 2, Name = "Tea", Price =15},
-            new Product{ Id = 3, Name = "Chocolate", Price =3}
-        };
+        private IProductRepository ProductRepository { get; set; }
 
-        public Task<Product> Add(Product entity)
+        public ProductService(IProductRepository productRepository)
         {
-            Products.Add(entity);
-            return Task.FromResult(entity);
+            ProductRepository = productRepository;
         }
 
-        public void Delete(int id)
+        public async Task<IEnumerable<Product>> GetAll()
         {
-            Products.RemoveAt(id);
+            return await ProductRepository.GetAll();
         }
 
-        public Task<List<Product>> GetAll()
+        public async Task<Product> GetById(int id)
         {
-            return Task.FromResult(Products);
+            return await ProductRepository.GetById(id);
         }
 
-        public Task<Product> GetById(int id)
+        public async Task<Product> Add(Product entity)
         {
-            var entity = Products.FirstOrDefault(p => p.Id == id);
-            return Task.FromResult(entity);
+            return await ProductRepository.Add(entity);
         }
 
-        public Task<Product> Update(int id, Product entity)
+        public async Task<Product> Update(int id, Product entity)
         {
-            Products[id] = entity;
-            return Task.FromResult(entity);
+            var exist = await ProductRepository.GetById(id);
+            if (exist == null)
+            {
+                throw new Exception();
+            }
+
+            exist.Name = entity.Name;
+            exist.Price = entity.Price;
+
+            return await ProductRepository.Update(entity);
+        }
+
+        public async void Delete(int id)
+        {
+            var entity = await ProductRepository.GetById(id);
+            ProductRepository.Delete(entity);
         }
     }
 }
